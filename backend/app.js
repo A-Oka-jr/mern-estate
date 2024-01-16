@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import dbConnection from "./db/config.js";
 import cors from "cors";
 import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
 const app = express();
 
 app.use(express.json());
@@ -19,3 +20,4 @@ app.listen(PORT, () => {
 
 dbConnection();
 app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
