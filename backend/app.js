@@ -1,9 +1,13 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import dbConnection from "./db/config.js";
+import cors from "cors";
+import userRouter from "./routes/user.route.js";
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 dotenv.config();
 
@@ -14,3 +18,4 @@ app.listen(PORT, () => {
 });
 
 dbConnection();
+app.use("/api/user", userRouter);
