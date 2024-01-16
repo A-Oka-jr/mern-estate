@@ -1,12 +1,12 @@
 import authService from "../services/auth.services.js";
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
     let result = await authService.signup(username, email, password);
     res.status(201).json("User Created Successfully");
   } catch (error) {
     console.log(error.message);
-    res.status(500).send({ message: error.message });
+    next(error);
   }
 };

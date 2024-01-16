@@ -4,20 +4,20 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      requierd: true,
+      required: true,
       unique: true,
     },
     email: {
       type: String,
-      requierd: true,
-      unique: true,
+      required: true,
+      unique: true, // This ensures uniqueness for the email field
     },
     password: {
       type: String,
-      requierd: true,
+      required: true,
     },
   },
-  { timeseries: true }
+  { timestamps: true } // I corrected "timeseries" to "timestamps" assuming it's for adding createdAt and updatedAt timestamps
 );
 
 const User = mongoose.model("User", userSchema);
