@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios"
+import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
-  const [error, setEerror] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,24 +16,25 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
+      const response = await axios.post("/api/auth/signup", formData, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      if (data.success == false) {
+
+      const data = response.data;
+
+      if (data.success === false) {
         setLoading(false);
-        setEerror(data.message);
+        setError(data.message);
         return;
       }
+
       setLoading(false);
-      setEerror(null);
+      setError(null);
       navigate("/sign-in");
     } catch (error) {
       setLoading(false);
-      setEerror(error.message);
-      console.log(error);
+      setError(error.message);
+      console.error(error);
     }
   };
 

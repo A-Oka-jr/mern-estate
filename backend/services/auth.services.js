@@ -1,11 +1,35 @@
 import authDao from "../dao/auth.dao.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import errorHandler from "../utils/error.js";
 
 const authService = {};
 authService.signup = async (username, email, password) => {
   const hashedPassword = await bcryptjs.hash(password, 7);
 
   return authDao.signup(username, email, hashedPassword);
+};
+
+authService.signin = async (email, password) => {
+  try {
+    const user = await authDao.getUserByEmail(email);
+    if (!user) {
+      throw errorHandler(404, "User Not Found!");
+    }
+
+    const validPassword = bcryptjs.compareSync(password, user.password);
+    if (!validPassword) {
+      throw errorHandler(401, "Wrong Email Or Password");
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const { password: pass, ...rest } = user._doc;
+
+    return { rest, token };
+  } catch (error) {
+    console.log(error.message);
+    throw error; // Rethrow the error to be caught by the controller
+  }
 };
 
 export default authService;
