@@ -32,4 +32,36 @@ authService.signin = async (email, password) => {
   }
 };
 
+authService.signInWithGoogle = async (body) => {
+  try {
+    const user = await authDao.getUserByEmail(body.email);
+
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = user._doc;
+      return { rest, token };
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcryptjs.hash(generatedPassword, 7);
+      const username =
+        body.name.split(" ").join("").toLowerCase() +
+        Math.random().toString(36).slice(-4);
+      const newUser = await authDao.signup(
+        username,
+        body.email,
+        hashedPassword,
+        body.photo
+      );
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = newUser._doc;
+      return { rest, token };
+    }
+  } catch (error) {
+    console.log(error.message);
+    throw error; // Rethrow the error to be caught by the controller
+  }
+};
+
 export default authService;

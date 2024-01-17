@@ -1,8 +1,12 @@
 import User from "../models/user.model.js";
 const authDao = {};
 
-authDao.signup = async (username, email, password) => {
-  let result = await User.create({ username, email, password });
+authDao.signup = async (username, email, password, avatar) => {
+  if (!avatar) {
+    avatar =
+      "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg";
+  }
+  let result = await User.create({ username, email, password, avatar });
   return result;
 };
 
