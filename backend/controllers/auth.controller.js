@@ -1,8 +1,4 @@
-import authDao from "../dao/auth.dao.js";
 import authService from "../services/auth.services.js";
-import errorHandler from "../utils/error.js";
-import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
