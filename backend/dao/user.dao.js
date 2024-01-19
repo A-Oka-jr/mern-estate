@@ -18,4 +18,9 @@ userDao.updateUser = async (id, data) => {
   return user;
 };
 
+userDao.deleteUser = async (id) => {
+  const deletedUser = await User.findByIdAndDelete(id);
+  return deletedUser;
+};
+
 export default userDao;

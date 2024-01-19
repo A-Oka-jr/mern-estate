@@ -18,4 +18,8 @@ userService.updateUser = async (id, user) => {
     throw error; // Rethrow the error to be caught by the controller
   }
 };
+
+userService.deleteUser = async (id) => {
+  return await userDao.deleteUser(id);
+};
 export default userService;

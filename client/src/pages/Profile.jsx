@@ -11,7 +11,11 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailuar,
+  deleteUserFailuar,
+  deleteUserStart,
+  deleteUserSuccess,
 } from "../redux/user/userSlice";
+import axios from "axios";
 
 const Profile = () => {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -81,6 +85,22 @@ const Profile = () => {
     }
   };
 
+  const handelDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await axios.delete(`/api/user/delete/${currentUser._id}`);
+
+      if (res.success === true) {
+        dispatch(deleteUserFailuar(res.message));
+        return;
+      }
+
+      dispatch(deleteUserSuccess(res));
+    } catch (error) {
+      dispatch(deleteUserFailuar(error.message));
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -145,7 +165,12 @@ const Profile = () => {
       </form>
 
       <div className="flex justify-between mt-5">
-        <span className="text-red-700 cursor-pointer">Delete account</span>
+        <span
+          onClick={handelDeleteUser}
+          className="text-red-700 cursor-pointer"
+        >
+          Delete account
+        </span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
