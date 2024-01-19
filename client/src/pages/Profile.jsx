@@ -14,6 +14,9 @@ import {
   deleteUserFailuar,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
+  signOutUserFailuar,
+  signOutUserSuccess,
 } from "../redux/user/userSlice";
 import axios from "axios";
 
@@ -101,6 +104,21 @@ const Profile = () => {
     }
   };
 
+  const handelSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await axios.get(`/api/auth/signout`);
+
+      if (res.success === false) {
+        dispatch(signOutUserFailuar(res.message));
+        return;
+      }
+      dispatch(signOutUserSuccess(res));
+    } catch (error) {
+      dispatch(signOutUserFailuar(error.message));
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -171,7 +189,9 @@ const Profile = () => {
         >
           Delete account
         </span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handelSignOut} className="text-red-700 cursor-pointer">
+          Sign out
+        </span>
       </div>
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">
