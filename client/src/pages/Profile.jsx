@@ -19,6 +19,7 @@ import {
   signOutUserSuccess,
 } from "../redux/user/userSlice";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -180,6 +181,13 @@ const Profile = () => {
         >
           {loading ? "loading..." : "update"}
         </button>
+
+        <Link
+          className="bg-green-700 text-white rounded-lg p-3 uppercase text-center hover:opacity-95"
+          to={"/create-listing"}
+        >
+          Create Listing
+        </Link>
       </form>
 
       <div className="flex justify-between mt-5">
