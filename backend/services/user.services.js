@@ -1,5 +1,6 @@
 import bcryptjs from "bcryptjs";
 import userDao from "../dao/user.dao.js";
+import listingDao from "../dao/listing.dao.js";
 
 const userService = {};
 
@@ -21,5 +22,9 @@ userService.updateUser = async (id, user) => {
 
 userService.deleteUser = async (id) => {
   return await userDao.deleteUser(id);
+};
+
+userService.getUserListings = async (userId) => {
+  return await listingDao.getUserListings(userId);
 };
 export default userService;

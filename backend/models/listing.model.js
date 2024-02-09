@@ -14,7 +14,7 @@ const listingSchema = new mongoose.Schema(
     type: { type: String, requried: true },
     offer: { type: Boolean, requried: true },
     imageUrls: { type: Array, requried: true },
-    useRef: { type: String, requried: true },
+    userRef: { type: String, requried: true },
   },
   { timestamps: true }
 );

@@ -7,4 +7,9 @@ listingDao.createListing = async (data) => {
   return listing;
 };
 
+listingDao.getUserListings = async (userId) => {
+  let userListings = await Listing.find({ userRef: userId });
+  return userListings;
+};
+
 export default listingDao;
