@@ -15,7 +15,7 @@ const CreateListing = () => {
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
-    descripition: "",
+    description: "",
     address: "",
     type: "rent",
     bedrooms: 1,
@@ -149,7 +149,8 @@ const CreateListing = () => {
       if (data.success === false) {
         setError(data.message);
       }
-      navigate(`/listing/${data._id}`);
+      console.log(data);
+      navigate(`/listing/${data.listing._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -182,7 +183,7 @@ const CreateListing = () => {
             id="description"
             required
             onChange={handleChange}
-            value={formData.descripition}
+            value={formData.description}
           />
 
           <input
