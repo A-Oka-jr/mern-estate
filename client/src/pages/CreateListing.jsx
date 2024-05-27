@@ -127,7 +127,6 @@ const CreateListing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (formData.imageUrls > 1)
         return setError("You must upload at least one image");
@@ -140,7 +139,7 @@ const CreateListing = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          useRef: currentUser._id,
+          userRef: currentUser._id,
         }),
       });
 
@@ -149,7 +148,6 @@ const CreateListing = () => {
       if (data.success === false) {
         setError(data.message);
       }
-      console.log(data);
       navigate(`/listing/${data.listing._id}`);
     } catch (error) {
       setError(error.message);
