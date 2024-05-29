@@ -1,6 +1,18 @@
 import listingService from "../services/listing.services.js";
 import errorHandler from "../utils/error.js";
 
+export const getListingById = async (req, res, next) => {
+  try {
+    const listing = await listingService.findById(req.params.id);
+
+    if (!listing) return next(errorHandler(404, "Listing not found"));
+
+    return res.status(200).json({ success: true, listing });
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+  }
+};
 export const createListing = async (req, res, next) => {
   try {
     let listing = await listingService.createListing(req.body);
@@ -29,7 +41,6 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const updateListing = async (req, res, next) => {
   try {
