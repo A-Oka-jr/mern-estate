@@ -27,4 +27,8 @@ userService.deleteUser = async (id) => {
 userService.getUserListings = async (userId) => {
   return await listingDao.getUserListings(userId);
 };
+
+userService.getUserById = async (id) => {
+  return await userDao.getUserById(id);
+};
 export default userService;

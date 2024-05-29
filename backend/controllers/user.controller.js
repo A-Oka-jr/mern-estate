@@ -49,3 +49,16 @@ export const getUserListings = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getUserById = async (req, res, next) => {
+  try {
+    let user = await userService.getUserById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+  }
+};
