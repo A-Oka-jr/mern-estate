@@ -21,4 +21,10 @@ listingDao.findById = async (id) => {
   let listing = await Listing.findById(id);
   return listing;
 };
+
+listingDao.updateListing = async (id, data) => {
+  let listing = await Listing.findByIdAndUpdate(id, data, { new: true });
+  return listing;
+};
+
 export default listingDao;

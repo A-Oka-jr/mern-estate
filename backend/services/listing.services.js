@@ -12,4 +12,7 @@ listingService.deleteListing = async (id) => {
   return await listingDao.deleteListing(id);
 };
 
+listingService.updateListing = async (id, data) => {
+  return await listingDao.updateListing(id, data);
+};
 export default listingService;
