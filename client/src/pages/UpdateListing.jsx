@@ -8,7 +8,6 @@ import {
 import { app } from "../fireBase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
 const UpdateListing = () => {
   const { currentUser } = useSelector((state) => state.user);
