@@ -141,6 +141,20 @@ const Profile = () => {
     }
   };
 
+  const handelDeleteListing = async (id) => {
+    try {
+      if (confirm("Are you sure you want to delete this listing?")) {
+        const res = await axios.delete(`/api/listing/delete/${id}`);
+        if (res.success === false) {
+          console.error(res);
+          return;
+        }
+        setUserListings((prev) => prev.filter((listing) => listing._id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -259,7 +273,12 @@ const Profile = () => {
 
               <div className="flex flex-col items-center ">
                 <button className="text-green-700">Edit</button>
-                <button className="text-red-700">Delete</button>
+                <button
+                  onClick={() => handelDeleteListing(listing._id)}
+                  className="text-red-700"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

@@ -12,4 +12,13 @@ listingDao.getUserListings = async (userId) => {
   return userListings;
 };
 
+listingDao.deleteListing = async (id) => {
+  let listing = await Listing.findByIdAndDelete(id);
+  return listing;
+};
+
+listingDao.findById = async (id) => {
+  let listing = await Listing.findById(id);
+  return listing;
+};
 export default listingDao;
