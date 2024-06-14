@@ -57,3 +57,14 @@ export const updateListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getListings = async (req, res, next) => {
+  const query = req.query;
+  try {
+    const listings = await listingService.getListings(query);
+    return res.status(200).json({ success: true, listings });
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+  }
+};

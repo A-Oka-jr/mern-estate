@@ -27,4 +27,43 @@ listingDao.updateListing = async (id, data) => {
   return listing;
 };
 
+listingDao.getListings = async (query) => {
+  const limit = parseInt(query.limit) || 10;
+  const startIndex = parseInt(query.startIndex) || 0;
+  const searchTerm = query.searchTerm || "";
+  const sort = query.sort || "createdAt";
+  const order = query.order || "desc";
+  let offer = query.offer;
+  let furnished = query.furnished;
+  let parking = query.parking;
+  let type = query.type;
+
+  if (offer === undefined || offer === false) {
+    offer = { $in: [false, true] };
+  }
+
+  if (furnished === undefined || furnished === false) {
+    furnished = { $in: [false, true] };
+  }
+
+  if (parking === undefined || furnished === false) {
+    parking = { $in: [false, true] };
+  }
+
+  if (type === undefined || furnished === "all") {
+    type = { $in: ["sale", "rent"] };
+  }
+  let listings = await Listing.find({
+    name: { $regex: searchTerm, $options: "i" },
+    offer: offer,
+    furnished: furnished,
+    parking: parking,
+    type: type,
+  })
+    .limit(limit)
+    .skip(startIndex)
+    .sort({ [sort]: order });
+  return listings;
+};
+
 export default listingDao;

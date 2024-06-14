@@ -15,4 +15,8 @@ listingService.deleteListing = async (id) => {
 listingService.updateListing = async (id, data) => {
   return await listingDao.updateListing(id, data);
 };
+
+listingService.getListings = async (query) => {
+  return await listingDao.getListings(query);
+}
 export default listingService;
