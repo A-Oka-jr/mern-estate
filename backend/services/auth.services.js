@@ -5,9 +5,18 @@ import errorHandler from "../utils/error.js";
 
 const authService = {};
 authService.signup = async (username, email, password) => {
-  const hashedPassword = await bcryptjs.hash(password, 7);
+  const user = await authDao.getUserByEmail(email);
+  if (user) {
+    throw errorHandler(409, "User Already Exists!");
+  }
+  try {
+    const hashedPassword = await bcryptjs.hash(password, 7);
 
-  return authDao.signup(username, email, hashedPassword);
+    return authDao.signup(username, email, hashedPassword);
+  } catch (error) {
+    console.log(error.message);
+    throw error; // Rethrow the error to be caught by the controller
+  }
 };
 
 authService.signin = async (email, password) => {

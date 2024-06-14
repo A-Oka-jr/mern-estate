@@ -34,8 +34,7 @@ const SignUp = () => {
       navigate("/");
     } catch (error) {
       setLoading(false);
-      setError(error.message);
-      console.error(error);
+      setError(error.response.data.message);
     }
   };
 
