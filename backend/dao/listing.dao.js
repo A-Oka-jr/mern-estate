@@ -38,19 +38,19 @@ listingDao.getListings = async (query) => {
   let parking = query.parking;
   let type = query.type;
 
-  if (offer === undefined || offer === false) {
+  if (offer === undefined || offer === "false") {
     offer = { $in: [false, true] };
   }
 
-  if (furnished === undefined || furnished === false) {
+  if (furnished === undefined || furnished === "false") {
     furnished = { $in: [false, true] };
   }
 
-  if (parking === undefined || furnished === false) {
+  if (parking === undefined || parking === "false") {
     parking = { $in: [false, true] };
   }
 
-  if (type === undefined || furnished === "all") {
+  if (type === undefined || type === "all") {
     type = { $in: ["sale", "rent"] };
   }
   let listings = await Listing.find({
@@ -60,9 +60,9 @@ listingDao.getListings = async (query) => {
     parking: parking,
     type: type,
   })
+    .sort({ [sort]: order })
     .limit(limit)
-    .skip(startIndex)
-    .sort({ [sort]: order });
+    .skip(startIndex);
   return listings;
 };
 
