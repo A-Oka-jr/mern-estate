@@ -28,7 +28,7 @@ listingDao.updateListing = async (id, data) => {
 };
 
 listingDao.getListings = async (query) => {
-  const limit = parseInt(query.limit) || 10;
+  const limit = parseInt(query.limit) || 12;
   const startIndex = parseInt(query.startIndex) || 0;
   const searchTerm = query.searchTerm || "";
   const sort = query.sort || "createdAt";
